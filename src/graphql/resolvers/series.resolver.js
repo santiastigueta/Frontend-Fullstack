@@ -12,3 +12,29 @@ export const getAllSeries = gql `
     }
   }
 `;
+
+export const getSerie = gql `
+  query GetSerie($idSerie: ID) {
+  getSerie(idSerie: $idSerie) {
+    _id
+    name
+    author
+    rating
+    releaseDate
+    image
+  }
+}
+`;
+
+export const CREATE_SERIE = gql `
+  mutation CreateSerie($nombre: String!, $autor: String, $estrellas: String, $fechaLanzamiento: String, $image: String) {
+  createSerie(nombre: $nombre, autor: $autor, estrellas: $estrellas, fechaLanzamiento: $fechaLanzamiento, image: $image) {
+    _id
+    name
+    author
+    rating
+    releaseDate
+    image
+  }
+}
+`;

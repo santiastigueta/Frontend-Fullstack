@@ -10,11 +10,11 @@ import './App.css';
 // COMPONENTES
 import MiAppBar from './components/NavBar/NavBar';
 
+
 // Vistas
 import home from './views/home';
-// paso 1: hacer el navbar y pensar en las vistas
-// paso 2: hacer las vistas y SPA si es posible xd
-//  ¿que vistas hacemos? /Home, /:SerieDetail, y Agregar
+import Crear from './components/CreateSerie/create';
+import SeriesDetailContainer from './views/SeriesDetail/SeriesDetailContainer';
 
 function App() {
   return (
@@ -24,6 +24,8 @@ function App() {
         <br/>
         <Switch>
           <Route path="/" exact component={home}></Route>
+          <Route path="/create" component={Crear}></Route>
+          <Route path="/serie/:_id" component={SeriesDetailContainer}></Route>
         </Switch>
       </div>
     </Router>

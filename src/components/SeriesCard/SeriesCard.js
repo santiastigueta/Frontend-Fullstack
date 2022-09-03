@@ -5,13 +5,20 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 function DisplayAllSeries() {
+
+  const history = useHistory();
   const { loading, error, data } = useQuery(getAllSeries);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :</p>;
-  console.log('este es el data: ',data)
-  return data.getAllSeries.map(({ _id, name, author, rating, releaseDate, image }) => (
+  console.log('este es el data: ',data);
+
+  const serie = Object.values(data.getAllSeries);
+  console.log('mapeo de series: ', serie)
+
+  return serie.map(({ _id, name, author, rating, releaseDate, image }) => (
         <Card sx={{ maxWidth: 345 }}>
           <CardActionArea>
             <CardMedia
@@ -34,7 +41,7 @@ function DisplayAllSeries() {
               imdb score: {rating}
             </Button>
           </CardActions>
-          <Button variant="contained" >
+          <Button variant="contained" onClick={function(){history.push(`/serie/${_id}`)}}>
             Ver mas detalles
           </Button>
         </Card>
