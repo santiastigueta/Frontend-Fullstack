@@ -38,3 +38,16 @@ export const CREATE_SERIE = gql `
   }
 }
 `;
+
+export const DELETE_SERIE = gql `
+  mutation DeleteSerie($idSerie: ID!) {
+  deleteSerie(idSerie: $idSerie) {
+    _id
+    name
+    author
+    rating
+    releaseDate
+    image
+  }
+}
+`;

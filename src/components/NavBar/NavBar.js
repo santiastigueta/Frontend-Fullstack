@@ -17,6 +17,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {Link} from 'react-router-dom';
 import { Button } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -178,7 +179,7 @@ export default function MiAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            <Button component={Link} to="/" color="inherit">Home</Button>
+            <Button component={Link} to="/" color="inherit"><HomeIcon/></Button>
           </Typography>
           <Search>
             <SearchIconWrapper>

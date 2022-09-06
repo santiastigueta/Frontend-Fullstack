@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import './create.css';
 import { CREATE_SERIE } from '../../graphql/resolvers/series.resolver';
+
 import { useMutation } from '@apollo/client';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
+import TextField from '@mui/material/TextField';
 const Crear = () => {
   const history = useHistory();
   const backToMenu = () => {
@@ -20,25 +23,34 @@ const Crear = () => {
     variables: {
       nombre: formState.nombre,
       autor: formState.autor,
-      estrellas: formState.rating,
+      estrellas: formState.estrellas,
       fechaLanzamiento: formState.fechaLanzamiento,
       image: formState.image
     }
   });
 
+  const createThisSeries = () => {
+    createSerie();
+    history.push('/');
+    window.location.reload(false);
+  }
   return (
     <div>
       <h1>Añada una serie nueva!</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createSerie();
+          createThisSeries();
         }}
       >
-        <div classnombre="flex flex-column mt3">
-          <input
+        <div className="form">
+          <TextField 
+            id="outlined-basic" 
+            label="Name" 
+            variant="outlined"
             classnombre="mb2"
             value={formState.nombre}
+            helperText="Please enter your name"
             onChange={(e) =>
               setFormState({
                 ...formState,
@@ -46,11 +58,14 @@ const Crear = () => {
               })
             }
             type="text"
-            placeholder="Indique nombre de la serie"
-          />
-          <input
+            />
+          <TextField 
+            id="outlined-basic" 
+            label="Autor" 
+            variant="outlined"
             classnombre="mb2"
             value={formState.autor}
+            helperText="Indique el autor de la serie"
             onChange={(e) =>
               setFormState({
                 ...formState,
@@ -58,23 +73,29 @@ const Crear = () => {
               })
             }
             type="text"
-            placeholder="Autor de la serie"
-          />
-          <input
+            />
+          <TextField 
+            id="outlined-basic" 
+            label="Puntuacion" 
+            variant="outlined"
             classnombre="mb2"
             value={formState.estrellas}
+            helperText="Toda serie tiene puntuacion"
             onChange={(e) =>
               setFormState({
                 ...formState,
                 estrellas: e.target.value
               })
             }
-            type="number"
-            placeholder="¿Qué puntuacion tiene?"
-          />
-          <input
+            type="text"
+            />
+          <TextField 
+            id="outlined-basic" 
+            label="Año" 
+            variant="outlined"
             classnombre="mb2"
             value={formState.fechaLanzamiento}
+            helperText="¿En qué año se estrenó?"
             onChange={(e) =>
               setFormState({
                 ...formState,
@@ -82,11 +103,15 @@ const Crear = () => {
               })
             }
             type="text"
-            placeholder="Año de lanzamiento"
-          />
-          <input
+            />
+          
+          <TextField 
+            id="outlined-basic" 
+            label="Imagen" 
+            variant="outlined"
             classnombre="mb2"
             value={formState.image}
+            helperText="Pegue la direaccion de imagen"
             onChange={(e) =>
               setFormState({
                 ...formState,
@@ -94,8 +119,7 @@ const Crear = () => {
               })
             }
             type="text"
-            placeholder="pegue dirección de imagen"
-          />
+            />
         </div>
         <Button type='submit' variant="contained">Hecho</Button>
         <Button primary onClick={backToMenu}>Volver</Button>

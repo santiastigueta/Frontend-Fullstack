@@ -1,4 +1,5 @@
-import { getAllSeries } from '../../graphql/resolvers/series.resolver'; 
+import { getAllSeries } from '../../graphql/resolvers/series.resolver';
+import './seriesCard.css';
 import { useQuery } from '@apollo/client';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -19,7 +20,7 @@ function DisplayAllSeries() {
   console.log('mapeo de series: ', serie)
 
   return serie.map(({ _id, name, author, rating, releaseDate, image }) => (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card className='Card' sx={{ maxWidth: 345 }}>
           <CardActionArea>
             <CardMedia
               component="img"
