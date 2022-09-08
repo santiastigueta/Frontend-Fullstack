@@ -51,3 +51,16 @@ export const DELETE_SERIE = gql `
   }
 }
 `;
+
+export const UPDATE_SERIE = gql `
+  mutation UpdateSerie($idSerie: ID!, $nombre: String!, $autor: String!, $estrellas: Float!, $fechaLanzamiento: String!, $image: String!) {
+  updateSerie(idSerie: $idSerie, nombre: $nombre, autor: $autor, estrellas: $estrellas, fechaLanzamiento: $fechaLanzamiento, image: $image) {
+    _id
+    name
+    author
+    releaseDate
+    rating
+    image
+  }
+}
+`;

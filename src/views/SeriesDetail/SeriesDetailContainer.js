@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import './SeriesDetail.css';
 import { useQuery, useMutation} from "@apollo/client";
-import { getSerie } from "../../graphql/resolvers/series.resolver";
+import { getSerie, UPDATE_SERIE } from "../../graphql/resolvers/series.resolver";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -15,10 +15,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DELETE_SERIE } from '../../graphql/resolvers/series.resolver';
 import { useLocation, useParams, useHistory } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+;
 
 function SeriesDetailContainer() {
   const {_id} = useParams();
   const [open, setOpen] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [formState, setFormState] =useState({
+    nombre: '',
+    autor: '',
+    estrellas: '',
+    fechaLanzamiento: '',
+    image: ''
+  })
   const history = useHistory();
   
   const handleClickOpen = () => {
@@ -27,8 +37,14 @@ function SeriesDetailContainer() {
   const handleClose = () => {
     setOpen(false);
   };
+  const updateOpen = () =>{
+    setOpenUpdate(true);
+  };
+  const updateClose = () => {
+    setOpenUpdate(false)
+  }
 
-    // Query: 
+  // Query: 
   const { loading, error, data } = useQuery(getSerie, {
     variables: {
       idSerie: _id
@@ -38,6 +54,15 @@ function SeriesDetailContainer() {
   const [deleteSeries] = useMutation(DELETE_SERIE, {
     variables: {
       idSerie: _id
+    }
+  })
+  const [updateSerie] = useMutation(UPDATE_SERIE, {
+    variables: {
+      nombre: formState.nombre,
+      autor: formState.autor,
+      estrellas: formState.estrellas,
+      fechaLanzamiento: formState.fechaLanzamiento,
+      image: formState.image
     }
   })
 
@@ -52,6 +77,10 @@ function SeriesDetailContainer() {
     window.location.reload(false);
   }
   
+  const updateThisSeries = () => {
+    updateSerie();
+    window.location.reload(false)
+  }
   
   return(
     <div className='SeriesDetailContainer'>
@@ -71,10 +100,12 @@ function SeriesDetailContainer() {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" color='primary'>Editar</Button>
+          <Button variant="contained" color='primary' onClick={updateOpen}>Editar</Button>
           <Button size="small" onClick={handleClickOpen} variant='outlined' color='error'  startIcon={<DeleteIcon />}>Eliminar</Button>
         </CardActions>
       </Card>
+
+      {/* Eliminar */}
       <Dialog
       open={open}
       onClose={handleClose}
@@ -96,7 +127,112 @@ function SeriesDetailContainer() {
         </Button>
       </DialogActions>
     </Dialog>
+
+    {/* Update */}
+    <Dialog
+      open={openUpdate}
+      onClose={updateClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      >
+      <DialogTitle id="alert-dialog-title">
+        ¿{serieDetail.name} necesita cambios?
+      </DialogTitle>
+      <DialogContent>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          updateThisSeries();
+        }}
+      >
+        <div className="form">
+          <TextField 
+            id="outlined-basic" 
+            label="Name" 
+            variant="outlined"
+            classnombre="mb2"
+            value={formState.nombre}
+            helperText="cambie el nombre de la serie"
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                nombre: e.target.value
+              })
+            }
+            type="text"
+            />
+          <TextField 
+            id="outlined-basic" 
+            label="Autor" 
+            variant="outlined"
+            classnombre="mb2"
+            value={formState.autor}
+            helperText="Indique el autor de la serie"
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                autor: e.target.value
+              })
+            }
+            type="text"
+            />
+          <TextField 
+            id="outlined-basic" 
+            label="Puntuacion" 
+            variant="outlined"
+            classnombre="mb2"
+            value={formState.estrellas}
+            helperText="Toda serie tiene puntuacion"
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                estrellas: e.target.value
+              })
+            }
+            type="text"
+            />
+          <TextField 
+            id="outlined-basic" 
+            label="Año" 
+            variant="outlined"
+            classnombre="mb2"
+            value={formState.fechaLanzamiento}
+            helperText="¿En qué año se estrenó?"
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                fechaLanzamiento: e.target.value
+              })
+            }
+            type="text"
+            />
+          
+          <TextField 
+            id="outlined-basic" 
+            label="Imagen" 
+            variant="outlined"
+            classnombre="mb2"
+            value={formState.image}
+            helperText="Pegue la direaccion de imagen"
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                image: e.target.value
+              })
+            }
+            type="text"
+            />
+        </div>
+        <Button type='submit' variant="contained">Hecho</Button>
+      </form>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={updateClose}>cancelar</Button>
+        <Button type='submit' variant="contained">Hecho</Button>
+      </DialogActions>
+    </Dialog> 
     </div>
-  )
-}
+  );
+};
+
 export default SeriesDetailContainer;
