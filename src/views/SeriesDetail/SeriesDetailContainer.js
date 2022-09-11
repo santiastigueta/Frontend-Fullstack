@@ -56,8 +56,10 @@ function SeriesDetailContainer() {
       idSerie: _id
     }
   })
+  
   const [updateSerie] = useMutation(UPDATE_SERIE, {
     variables: {
+      idSerie: _id,
       nombre: formState.nombre,
       autor: formState.autor,
       estrellas: formState.estrellas,
@@ -65,7 +67,7 @@ function SeriesDetailContainer() {
       image: formState.image
     }
   })
-
+  
   if (loading) return null;
   if (error) return `Error! ${error}`;
   const serieDetail = data.getSerie;
@@ -79,9 +81,10 @@ function SeriesDetailContainer() {
   
   const updateThisSeries = () => {
     updateSerie();
-    window.location.reload(false)
+    setOpenUpdate(false)
+    
   }
-  
+   
   return(
     <div className='SeriesDetailContainer'>
       <Card sx={{ maxWidth:500 }}>
@@ -227,8 +230,7 @@ function SeriesDetailContainer() {
       </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={updateClose}>cancelar</Button>
-        <Button type='submit' variant="contained">Hecho</Button>
+        <Button onClick={updateClose}>Atrás</Button>
       </DialogActions>
     </Dialog> 
     </div>
