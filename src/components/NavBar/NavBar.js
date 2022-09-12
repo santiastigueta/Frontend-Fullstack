@@ -18,6 +18,8 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import {Link} from 'react-router-dom';
 import { Button } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import Buscador from '../AutoComplete/autoComplete';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -162,7 +164,7 @@ export default function MiAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" className='AppBar'>
         <Toolbar>
           <IconButton
             size="large"
@@ -182,30 +184,14 @@ export default function MiAppBar() {
             <Button component={Link} to="/" color="inherit"><HomeIcon/></Button>
           </Typography>
           <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
+            <Buscador></Buscador>
           </Search>
+          <SearchIcon></SearchIcon>
+          <Box sx={{ flexGrow: 0.3 }}>
+            <FilterAltIcon></FilterAltIcon>
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
               edge="end"

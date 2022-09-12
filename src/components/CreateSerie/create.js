@@ -16,7 +16,8 @@ const Crear = () => {
     autor: '',
     estrellas: '',
     fechaLanzamiento: '',
-    image: ''
+    image: '',
+    gender: ''
   });
 
   const [createSerie] = useMutation(CREATE_SERIE, {
@@ -25,7 +26,8 @@ const Crear = () => {
       autor: formState.autor,
       estrellas: formState.estrellas,
       fechaLanzamiento: formState.fechaLanzamiento,
-      image: formState.image
+      image: formState.image,
+      gender: formState.gender
     }
   });
 
@@ -46,11 +48,11 @@ const Crear = () => {
         <div className="form">
           <TextField 
             id="outlined-basic" 
-            label="Name" 
+            label="Nombre" 
             variant="outlined"
             classnombre="mb2"
             value={formState.nombre}
-            helperText="Please enter your name"
+            helperText="Nombre de la serie"
             onChange={(e) =>
               setFormState({
                 ...formState,
@@ -80,7 +82,7 @@ const Crear = () => {
             variant="outlined"
             classnombre="mb2"
             value={formState.estrellas}
-            helperText="Toda serie tiene puntuacion"
+            helperText="Puntuación de IMDb"
             onChange={(e) =>
               setFormState({
                 ...formState,
@@ -116,6 +118,21 @@ const Crear = () => {
               setFormState({
                 ...formState,
                 image: e.target.value
+              })
+            }
+            type="text"
+            />
+            <TextField 
+            id="outlined-basic" 
+            label="género" 
+            variant="outlined"
+            classnombre="mb2"
+            value={formState.gender}
+            helperText="Género de la serie"
+            onChange={(e) =>
+              setFormState({
+                ...formState,
+                gender: e.target.value
               })
             }
             type="text"

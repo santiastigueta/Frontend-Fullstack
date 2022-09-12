@@ -7,6 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 
 import { createTheme } from '@mui/material/styles';
 import { teal } from '@mui/material/colors';
+import { Autocomplete } from '@mui/material';
+import Buscador from '../components/AutoComplete/autoComplete';
 
 const home = () => {
     return (
@@ -15,7 +17,7 @@ const home = () => {
                 <Fab color="primary" aria-label="add">
                     <AddIcon color="color" className='addIcon'></AddIcon>
                 </Fab>
-            </Link> 
+            </Link>
             <SeriesCardContainer></SeriesCardContainer>
         </div>
     );

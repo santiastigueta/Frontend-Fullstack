@@ -19,7 +19,7 @@ function DisplayAllSeries() {
   const serie = Object.values(data.getAllSeries);
   console.log('mapeo de series: ', serie)
 
-  return serie.map(({ _id, name, author, rating, releaseDate, image }) => (
+  return serie.map(({ _id, name, author, gender, releaseDate, image }) => (
         <Card className='Card' sx={{ maxWidth: 345 }}>
           <CardActionArea>
             <CardMedia
@@ -39,7 +39,7 @@ function DisplayAllSeries() {
           </CardActionArea>
           <CardActions>
             <Button size="small" color="primary">
-              imdb score: {rating}
+              género: {gender}
             </Button>
           </CardActions>
           <Button variant="contained" onClick={function(){history.push(`/serie/${_id}`)}}>

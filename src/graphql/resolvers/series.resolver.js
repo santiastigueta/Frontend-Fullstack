@@ -9,6 +9,7 @@ export const getAllSeries = gql `
       rating
       releaseDate
       image
+      gender
     }
   }
 `;
@@ -22,19 +23,21 @@ export const getSerie = gql `
     rating
     releaseDate
     image
+    gender
   }
 }
 `;
 
 export const CREATE_SERIE = gql `
-  mutation CreateSerie($nombre: String!, $autor: String, $estrellas: String, $fechaLanzamiento: String, $image: String) {
-  createSerie(nombre: $nombre, autor: $autor, estrellas: $estrellas, fechaLanzamiento: $fechaLanzamiento, image: $image) {
+  mutation CreateSerie($nombre: String!, $autor: String, $estrellas: String, $fechaLanzamiento: String, $image: String, $gender: String) {
+  createSerie(nombre: $nombre, autor: $autor, estrellas: $estrellas, fechaLanzamiento: $fechaLanzamiento, image: $image, gender: $gender) {
     _id
     name
     author
     rating
     releaseDate
     image
+    gender
   }
 }
 `;
@@ -48,19 +51,21 @@ export const DELETE_SERIE = gql `
     rating
     releaseDate
     image
+    gender
   }
 }
 `;
 
 export const UPDATE_SERIE = gql `
-  mutation UpdateSerie($idSerie: ID!, $nombre: String!, $autor: String, $estrellas: String, $fechaLanzamiento: String, $image: String) {
-  updateSerie(idSerie: $idSerie, nombre: $nombre, autor: $autor, estrellas: $estrellas, fechaLanzamiento: $fechaLanzamiento, image: $image) {
+  mutation UpdateSerie($idSerie: ID, $nombre: String, $autor: String, $estrellas: String, $fechaLanzamiento: String, $image: String, $gender: String) {
+  updateSerie(idSerie: $idSerie, nombre: $nombre, autor: $autor, estrellas: $estrellas, fechaLanzamiento: $fechaLanzamiento, image: $image, gender: $gender) {
     _id
     name
     author
-    releaseDate
     rating
+    releaseDate
     image
+    gender
   }
 }
 `;

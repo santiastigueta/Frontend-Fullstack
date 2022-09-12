@@ -14,7 +14,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DELETE_SERIE } from '../../graphql/resolvers/series.resolver';
-import { useLocation, useParams, useHistory } from 'react-router-dom';
+import { useLocation, useParams, useHistory, Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 ;
 
@@ -27,7 +27,8 @@ function SeriesDetailContainer() {
     autor: '',
     estrellas: '',
     fechaLanzamiento: '',
-    image: ''
+    image: '',
+    gender: ''
   })
   const history = useHistory();
   
@@ -64,7 +65,8 @@ function SeriesDetailContainer() {
       autor: formState.autor,
       estrellas: formState.estrellas,
       fechaLanzamiento: formState.fechaLanzamiento,
-      image: formState.image
+      image: formState.image,
+      gender: formState.gender
     }
   })
   
@@ -99,13 +101,21 @@ function SeriesDetailContainer() {
             {serieDetail.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Esta serie fue creada por {serieDetail.author} en el año {serieDetail.releaseDate}
+            Fue creada por {serieDetail.author} en el año {serieDetail.releaseDate}. Esta serie es del género {serieDetail.gender}
           </Typography>
         </CardContent>
+        <cardAction>
+          <Typography variant="body3" color="text.primary">
+            ImDb Score: {serieDetail.rating}
+          </Typography>
+        </cardAction>
         <CardActions>
-          <Button variant="contained" color='primary' onClick={updateOpen}>Editar</Button>
+          <Button  color='primary' onClick={updateOpen}>Editar</Button>
           <Button size="small" onClick={handleClickOpen} variant='outlined' color='error'  startIcon={<DeleteIcon />}>Eliminar</Button>
         </CardActions>
+        <cardAction className="volver-button">
+          <Button variant="contained" color='primary' component={Link} to="/" >Volver</Button>
+        </cardAction>
       </Card>
 
       {/* Eliminar */}
