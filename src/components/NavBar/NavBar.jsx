@@ -183,10 +183,14 @@ export default function MiAppBar() {
           >
             <Button component={Link} to="/" color="inherit"><HomeIcon/></Button>
           </Typography>
-          <Search>
-            <Buscador></Buscador>
-          </Search>
-          <SearchIcon></SearchIcon>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            <Button component={Link} to="/search" color="inherit"><SearchIcon/></Button>
+          </Typography>
           <Box sx={{ flexGrow: 0.3 }}>
             <FilterAltIcon></FilterAltIcon>
           </Box>

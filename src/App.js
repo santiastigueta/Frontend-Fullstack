@@ -15,6 +15,7 @@ import MiAppBar from './components/NavBar/NavBar';
 import home from './views/home';
 import Crear from './components/CreateSerie/create';
 import SeriesDetailContainer from './views/SeriesDetail/SeriesDetailContainer';
+import Search from './views/Search/Search';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Switch>
           <Route path="/" exact component={home}></Route>
           <Route path="/create" component={Crear}></Route>
+          <Route path="/search" component={Search}></Route>
           <Route path="/serie/:_id" component={SeriesDetailContainer}></Route>
         </Switch>
       </div>

@@ -33,8 +33,7 @@ const Crear = () => {
 
   const createThisSeries = () => {
     createSerie();
-    history.push('/');
-    window.location.reload(false);
+    backToMenu();
   }
   return (
     <div>
