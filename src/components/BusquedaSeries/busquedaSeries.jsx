@@ -34,8 +34,7 @@ const BusquedaSeries = ({ info }) => {
                 {name}{" "}
               </Typography>{" "}
               <Typography variant="body2" color="text.secondary">
-                Esta serie fue creada por {author}
-                en el año {releaseDate}{" "}
+                Esta serie fue creada por {author} en el año {releaseDate}{" "}
               </Typography>{" "}
             </CardContent>{" "}
           </CardActionArea>{" "}
