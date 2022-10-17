@@ -1,0 +1,18 @@
+.searchIinput {
+    height: 20px;
+    width: 300px;
+    border-color: black;
+}
+
+.searchButton {
+    height: 55px;
+}
+
+.searchIcon {
+    width: 50px;
+}
+
+.search {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}

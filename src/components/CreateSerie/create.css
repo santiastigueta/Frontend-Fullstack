@@ -1,10 +1,54 @@
-.form {
+.Formulario {
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 15px;
+    flex-wrap: wrap;
+    gap: 30px;
+    width: auto;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 #outlined-basic {
-    width: 200px;
+    width: 230px;
+}
+
+.CreateComponent {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+}
+
+.imageContainer {
+    width: 60%;
+}
+
+.imageDragon {
+    height: 600px;
+    width: max-content;
+}
+
+
+/* @media (min-witdh: 1020px) {
+    .imageContainer {
+        display: none
+    }
+    .CreateComponent {
+        flex-direction: column;
+    }
+} */
+
+@media screen and (max-width: 480px) {
+    .imageDragon {
+        display: none;
+    }
+    .imageContainer {
+        display: none;
+    }
 }

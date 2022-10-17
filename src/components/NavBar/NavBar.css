@@ -1,3 +1,7 @@
 .AppBar {
     padding-top: 200px;
 }
+
+.MuiGrid-Appbar-colorPrimary {
+    color: red;
+}

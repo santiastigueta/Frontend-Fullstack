@@ -10,6 +10,7 @@ export const getAllSeries = gql `
       releaseDate
       image
       gender
+      name_lower
     }
   }
 `;
