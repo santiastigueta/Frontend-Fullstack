@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import "./create.css";
 import { CREATE_SERIE } from "../../graphql/resolvers/series.resolver";
-
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Autocomplete, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
+import years  from "../../utils/years";
+import score from "../../utils/score";
+import genders from "../../utils/genders";
+
 const Crear = () => {
   const history = useHistory();
   const backToMenu = () => {
     history.push("/");
   };
+
+  const [generoInputValue, setGeneroInputValue] = useState('');
+  const [yearInputValue, setYearInputValue] = useState('');
+  const [scoreInputValue, setScoreInputValue] = useState('')
+
   const [formState, setFormState] = useState({
     nombre: "",
     autor: "",
@@ -30,11 +38,12 @@ const Crear = () => {
       gender: formState.gender,
     },
   });
-
   const createThisSeries = () => {
     createSerie();
     backToMenu();
   };
+  
+
   return (
     <body className="CreateComponent">
       
@@ -77,37 +86,40 @@ const Crear = () => {
               }
               type="text"
             />
-            <TextField
-              id="outlined-basic"
-              label="Puntuacion"
-              variant="outlined"
-              classnombre="mb2"
+            <Autocomplete
               value={formState.estrellas}
-              helperText="Puntuación de IMDb"
-              onChange={(e) =>
+              onInputChange={(e, newValue)=>{
+                setScoreInputValue(newValue)
+              }}
+              inputValue={scoreInputValue}
+              onChange={(event, newValue)=>{
                 setFormState({
                   ...formState,
-                  estrellas: e.target.value,
+                  estrellas: newValue
                 })
-              }
-              type="text"
+              }}
+              id='rate-autocomplete'
+              options={score}
+              sx={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} label="Puntuación" />}
             />
-            <TextField
-              id="outlined-basic"
-              label="Año"
-              variant="outlined"
-              classnombre="mb2"
+            <Autocomplete
               value={formState.fechaLanzamiento}
-              helperText="¿En qué año se estrenó?"
-              onChange={(e) =>
+              onInputChange={(event, newValue)=>{
+                setYearInputValue(newValue)
+              }} 
+              inputValue={yearInputValue}
+              onChange={(event, newValue)=>{
                 setFormState({
                   ...formState,
-                  fechaLanzamiento: e.target.value,
+                  fechaLanzamiento: newValue
                 })
-              }
-              type="text"
+              }}
+              id='year-autocomplete'
+              options={years}
+              sx={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} label="Año de estreno" />}
             />
-
             <TextField
               id="outlined-basic"
               label="Imagen"
@@ -123,20 +135,22 @@ const Crear = () => {
               }
               type="text"
             />
-            <TextField
-              id="outlined-basic"
-              label="género"
-              variant="outlined"
-              classnombre="mb2"
+            <Autocomplete
               value={formState.gender}
-              helperText="Género de la serie"
-              onChange={(e) =>
+              onChange={(event, newValue)=>{
                 setFormState({
                   ...formState,
-                  gender: e.target.value,
+                  gender: newValue
                 })
-              }
-              type="text"
+              }}
+              inputValue={generoInputValue}
+              onInputChange={(event, newInputValue)=>{
+                setGeneroInputValue(newInputValue)
+              }}
+              id="gender-autocomplete"
+              options={genders}
+              sx={{width: 300}}
+              renderInput={(params) => <TextField {...params} label="Género" />}
             />
           </div>
           <Button type="submit" variant="contained" color="info">

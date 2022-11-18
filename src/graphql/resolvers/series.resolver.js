@@ -28,16 +28,16 @@ export const getSerie = gql `
   }
 }
 `;
-export const getSerieBusqueda = gql `
+/* export const getSerieBusqueda = gql `
   query GetSerieBusqueda {
     getSerieBusqueda {
       _id
       name
   }
 }
-`;
+`; */
 
-export const getSerieFilter = gql `
+/* export const getSerieFilter = gql `
   query GetSerieFilter($filter: String!) {
     getSerieFilter(filter: $filter) {
       _id
@@ -49,7 +49,7 @@ export const getSerieFilter = gql `
       image
     }
   }
-`;
+`; */
 
 export const CREATE_SERIE = gql `
   mutation CreateSerie($nombre: String!, $autor: String, $estrellas: String, $fechaLanzamiento: String, $image: String, $gender: String) {

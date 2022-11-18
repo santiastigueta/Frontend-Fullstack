@@ -14,24 +14,10 @@ import MiAppBar from "./components/NavBar/NavBar";
 import Home from "./views/Home";
 import Crear from "./components/CreateSerie/create";
 import SeriesDetailContainer from "./views/SeriesDetail/SeriesDetailContainer";
-
+import Filter from "./views/Filter";
 // estilos
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { green, purple, indigo, amber, yellow, red, blue } from '@mui/material/colors';
-
-const darkTheme = createTheme({
-  palette: {
-    primary: {
-      main: blue[500],
-    },
-    secondary: {
-      main: yellow[600],
-    },
-    info:{
-      main: '#000'
-    }
-  },
-});
+import { ThemeProvider } from "@mui/material/styles";
+import darkTheme from './utils/darkTheme';
 
 function App() {
   return (
@@ -44,6 +30,7 @@ function App() {
             <Route path="/" exact component={Home}></Route>
             <Route path="/create" component={Crear}></Route>
             <Route path="/serie/:_id" component={SeriesDetailContainer}></Route>
+            <Route path="/filter" component={Filter}></Route>
           </Switch>
         </div>
       </Router>

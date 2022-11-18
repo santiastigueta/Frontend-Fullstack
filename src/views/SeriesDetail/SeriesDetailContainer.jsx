@@ -195,6 +195,7 @@ function SeriesDetailContainer() {
                 variant="outlined"
                 classnombre="mb2"
                 value={formState.name}
+                helperText='Nombre de la serie'
                 onChange={(e) =>
                   setFormState({
                     ...formState,

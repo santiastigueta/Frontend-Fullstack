@@ -196,7 +196,9 @@ export default function MiAppBar() {
               </Button>
             </Typography>
             <Box sx={{ flexGrow: 0.3 }}>
-              <FilterAltIcon></FilterAltIcon>
+              <Button component={Link} to="/filter" color="inherit">
+                <FilterAltIcon></FilterAltIcon>
+              </Button>
             </Box>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
