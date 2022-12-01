@@ -8,11 +8,12 @@ import TextField from "@mui/material/TextField";
 import years  from "../../utils/years";
 import score from "../../utils/score";
 import genders from "../../utils/genders";
+import MiAppBar from "../NavBar/NavBar";
 
 const Crear = () => {
   const history = useHistory();
   const backToMenu = () => {
-    history.push("/");
+    history.push("/home");
   };
 
   const [generoInputValue, setGeneroInputValue] = useState('');
@@ -45,8 +46,9 @@ const Crear = () => {
   
 
   return (
-    <body className="CreateComponent">
-      
+    <>
+      <MiAppBar></MiAppBar>
+      <body className="CreateComponent">
       <div className="Formulario">
         <h1>Añada una serie nueva!</h1>
         <form
@@ -165,6 +167,8 @@ const Crear = () => {
         <img src='juego-tronos-poster.jpg' alt="" className='imageDragon'/>
       </div>
     </body>
+    </>
+    
   );
 };
 

@@ -7,6 +7,8 @@ import { getAllSeries } from "../graphql/resolvers/series.resolver";
 import { useState, useEffect } from "react";
 import SearchBar from "../components/SearchBar/SearchBar";
 import ListPage from "../components/SearchBar/ListPage";
+import MiAppBar from "../components/NavBar/NavBar";
+
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
@@ -24,7 +26,9 @@ const Home = () => {
   if (loading) return <p> Loading... </p>;
   if (error) return <p> Error: </p>;
   return (
-    <div>
+    <>
+      <MiAppBar></MiAppBar>
+      <div>
       <Link to="/create">
         <Fab color="info" aria-label="add">
           <AddIcon  className="addIcon"></AddIcon>
@@ -32,8 +36,9 @@ const Home = () => {
       </Link>
       <SearchBar posts={posts} setSearchResults={setSearchResults}/>
       <ListPage searchResults={searchResults} />
-      {/* <SeriesCardContainer></SeriesCardContainer> */}
-    </div>
+      </div>
+    </>
+    
   );
 };
 

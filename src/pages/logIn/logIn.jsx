@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { LOGIN_USUARIO } from '../../graphql/resolvers/user.resolver';
 import { useQuery } from '@apollo/client';
 
-const logIn = () => {
+const Login = () => {
   const [formState, setFormState] = useState({
     email: "",
     password: "",
@@ -19,7 +19,7 @@ const logIn = () => {
   });
   if (loading) return <p> Loading... </p>;
   if (error) return <p> Error: </p>;
-  
+
   return (
     <>
       <AppBarBis></AppBarBis>
@@ -45,4 +45,4 @@ const logIn = () => {
   )
 }
 
-export default logIn;
+export default Login;

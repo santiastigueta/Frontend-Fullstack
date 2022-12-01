@@ -21,6 +21,7 @@ import { DELETE_SERIE } from "../../graphql/resolvers/series.resolver";
 import { useLocation, useParams, useHistory, Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
+import MiAppBar from "../../components/NavBar/NavBar";
 function SeriesDetailContainer() {
   const { _id } = useParams();
   const [open, setOpen] = useState(false);
@@ -95,203 +96,211 @@ function SeriesDetailContainer() {
   };
 
   return (
-    <div className="SeriesDetailContainer">
-      <Card sx={{ maxWidth: 500 }}>
-        <CardMedia
-          component="img"
-          alt="serie-imagen"
-          height="140"
-          image={serieDetail.image}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {serieDetail.name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Fue creada por {serieDetail.author} en el año{" "}
-            {serieDetail.releaseDate}. Esta serie es del género{" "}
-            {serieDetail.gender}
-          </Typography>
-        </CardContent>
-        <cardAction>
-          <Typography variant="body3" color="text.primary">
-            ImDb Score: {serieDetail.rating}
-          </Typography>
-        </cardAction>
-        <CardActions>
-          <Button
-            size="small"
-            variant="contained"
-            startIcon={<EditIcon />}
-            color="info"
-            onClick={updateOpen}
-          >
-            Editar
-          </Button>
-          <Button
-            size="small"
-            onClick={handleClickOpen}
-            variant="contained"
-            color="info"
-            startIcon={<DeleteIcon />}
-          >
-            Eliminar
-          </Button>
-        </CardActions>
-        <cardAction className="volver-button">
-          <Button variant="contained" color="secondary" component={Link} to="/">
-            Volver
-          </Button>
-        </cardAction>
-      </Card>
-
-      {/* Eliminar */}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Estás seguro de eliminar esta serie?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Si elimina esta serie, será removida de la base de datos y no habrá
-            forma de recuperarla. Presione aceptar para eliminar{" "}
-            {serieDetail.name}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>cancelar</Button>
-          <Button onClick={eliminar} autoFocus>
-            Aceptar
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      {/* Update */}
-      <Dialog
-        open={openUpdate}
-        onClose={updateClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="editDialog"
-      >
-        <DialogTitle id="alert-dialog-title">
-          ¿{serieDetail.name} necesita cambios?
-        </DialogTitle>
-        <DialogContent>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              updateThisSeries();
-            }}
-          >
-            <div className="formEdit">
-              <TextField
-                id="outlined-basic"
-                label="Name"
-                variant="outlined"
-                classnombre="mb2"
-                value={formState.name}
-                helperText='Nombre de la serie'
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    name: e.target.value,
-                    //formState: {...formState,nombre: e.target.value}
-                  })
-                }
-                type="text"
-              />
-              <TextField
-                id="outlined-basic"
-                label="Autor"
-                variant="outlined"
-                classnombre="mb2"
-                value={formState.author}
-                helperText="Indique el autor de la serie"
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    author: e.target.value,
-                  })
-                }
-                type="text"
-              />
-              <TextField
-                id="outlined-basic"
-                label="Genero"
-                variant="outlined"
-                classnombre="mb2"
-                value={formState.gender}
-                helperText="Indique el genero de la serie"
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    gender: e.target.value,
-                  })
-                }
-                type="text"
-              />
-              <TextField
-                id="outlined-basic"
-                label="Puntuacion"
-                variant="outlined"
-                classnombre="mb2"
-                value={formState.rating}
-                helperText="Toda serie tiene puntuacion"
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    rating: e.target.value,
-                  })
-                }
-                type="text"
-              />
-              <TextField
-                id="outlined-basic"
-                label="Año"
-                variant="outlined"
-                classnombre="mb2"
-                value={formState.releaseDate}
-                helperText="¿En qué año se estrenó?"
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    releaseDate: e.target.value,
-                  })
-                }
-                type="text"
-              />
-
-              <TextField
-                id="outlined-basic"
-                label="Imagen"
-                variant="outlined"
-                classnombre="mb2"
-                value={formState.image}
-                helperText="Pegue la direaccion de imagen"
-                onChange={(e) =>
-                  setFormState({
-                    ...formState,
-                    image: e.target.value,
-                  })
-                }
-                type="text"
-              />
-            </div>
-            <Button type="submit" variant="contained">
-              Hecho
+    <>
+      <MiAppBar></MiAppBar>
+      <div className="SeriesDetailContainer">
+        <Card sx={{ maxWidth: 500 }}>
+          <CardMedia
+            component="img"
+            alt="serie-imagen"
+            height="140"
+            image={serieDetail.image}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {serieDetail.name}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Fue creada por {serieDetail.author} en el año{" "}
+              {serieDetail.releaseDate}. Esta serie es del género{" "}
+              {serieDetail.gender}
+            </Typography>
+          </CardContent>
+          <cardAction>
+            <Typography variant="body3" color="text.primary">
+              ImDb Score: {serieDetail.rating}
+            </Typography>
+          </cardAction>
+          <CardActions>
+            <Button
+              size="small"
+              variant="contained"
+              startIcon={<EditIcon />}
+              color="info"
+              onClick={updateOpen}
+            >
+              Editar
             </Button>
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={updateClose}>cancelar</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+            <Button
+              size="small"
+              onClick={handleClickOpen}
+              variant="contained"
+              color="info"
+              startIcon={<DeleteIcon />}
+            >
+              Eliminar
+            </Button>
+          </CardActions>
+          <cardAction className="volver-button">
+            <Button
+              variant="contained"
+              color="secondary"
+              component={Link}
+              to="/home"
+            >
+              Volver
+            </Button>
+          </cardAction>
+        </Card>
+
+        {/* Eliminar */}
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Estás seguro de eliminar esta serie?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Si elimina esta serie, será removida de la base de datos y no
+              habrá forma de recuperarla. Presione aceptar para eliminar{" "}
+              {serieDetail.name}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>cancelar</Button>
+            <Button onClick={eliminar} autoFocus>
+              Aceptar
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Update */}
+        <Dialog
+          open={openUpdate}
+          onClose={updateClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          className="editDialog"
+        >
+          <DialogTitle id="alert-dialog-title">
+            ¿{serieDetail.name} necesita cambios?
+          </DialogTitle>
+          <DialogContent>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                updateThisSeries();
+              }}
+            >
+              <div className="formEdit">
+                <TextField
+                  id="outlined-basic"
+                  label="Name"
+                  variant="outlined"
+                  classnombre="mb2"
+                  value={formState.name}
+                  helperText="Nombre de la serie"
+                  onChange={(e) =>
+                    setFormState({
+                      ...formState,
+                      name: e.target.value,
+                      //formState: {...formState,nombre: e.target.value}
+                    })
+                  }
+                  type="text"
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Autor"
+                  variant="outlined"
+                  classnombre="mb2"
+                  value={formState.author}
+                  helperText="Indique el autor de la serie"
+                  onChange={(e) =>
+                    setFormState({
+                      ...formState,
+                      author: e.target.value,
+                    })
+                  }
+                  type="text"
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Genero"
+                  variant="outlined"
+                  classnombre="mb2"
+                  value={formState.gender}
+                  helperText="Indique el genero de la serie"
+                  onChange={(e) =>
+                    setFormState({
+                      ...formState,
+                      gender: e.target.value,
+                    })
+                  }
+                  type="text"
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Puntuacion"
+                  variant="outlined"
+                  classnombre="mb2"
+                  value={formState.rating}
+                  helperText="Toda serie tiene puntuacion"
+                  onChange={(e) =>
+                    setFormState({
+                      ...formState,
+                      rating: e.target.value,
+                    })
+                  }
+                  type="text"
+                />
+                <TextField
+                  id="outlined-basic"
+                  label="Año"
+                  variant="outlined"
+                  classnombre="mb2"
+                  value={formState.releaseDate}
+                  helperText="¿En qué año se estrenó?"
+                  onChange={(e) =>
+                    setFormState({
+                      ...formState,
+                      releaseDate: e.target.value,
+                    })
+                  }
+                  type="text"
+                />
+
+                <TextField
+                  id="outlined-basic"
+                  label="Imagen"
+                  variant="outlined"
+                  classnombre="mb2"
+                  value={formState.image}
+                  helperText="Pegue la direaccion de imagen"
+                  onChange={(e) =>
+                    setFormState({
+                      ...formState,
+                      image: e.target.value,
+                    })
+                  }
+                  type="text"
+                />
+              </div>
+              <Button type="submit" variant="contained">
+                Hecho
+              </Button>
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={updateClose}>cancelar</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </>
   );
 }
 
