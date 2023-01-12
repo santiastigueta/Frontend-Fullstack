@@ -21,7 +21,6 @@ import { DELETE_SERIE } from "../../graphql/resolvers/series.resolver";
 import { useLocation, useParams, useHistory, Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
-import MiAppBar from "../../components/NavBar/NavBar";
 function SeriesDetailContainer() {
   const { _id } = useParams();
   const [open, setOpen] = useState(false);
@@ -97,7 +96,6 @@ function SeriesDetailContainer() {
 
   return (
     <>
-      <MiAppBar></MiAppBar>
       <div className="SeriesDetailContainer">
         <Card sx={{ maxWidth: 500 }}>
           <CardMedia

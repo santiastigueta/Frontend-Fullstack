@@ -14,12 +14,9 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 
-export default function AppBarBis() {
+export default function AppBarBis({logOutCallBack}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -79,8 +76,9 @@ export default function AppBarBis() {
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Stack spacing={2} direction="row">
-            <Button component={Link} to="/register" variant="contained">Sign Up</Button>
-            <Button component={Link} to="/log-in" variant="outlined">Log-In</Button>
+            <Button component={Link} to="/register" variant="contained">sign Up</Button>
+            <Button component={Link} to="/login" variant="outlined">login</Button>
+            <Button onClick={logOutCallBack}>Log Out</Button>
           </Stack>
         </Toolbar>
       </AppBar>

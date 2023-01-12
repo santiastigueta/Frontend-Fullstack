@@ -1,34 +1,47 @@
-import React from "react";
+import React, { useState, useContext} from "react";
 import AppBarBis from "../../components/NavBarBis/NavBarBis";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import { LOGIN_USUARIO } from "../../graphql/resolvers/user.resolver";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
+import { UserContext } from "../../App";
+import { useHistory } from "react-router-dom";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 
 const Login = () => {
+  const history = useHistory();
+  const [user, setUser] = useContext(UserContext);
   const [formState, setFormState] = useState({
     email: "",
     password: "",
   }); 
-
-  const [loginUsuario, { error, loading, data }] = useLazyQuery(LOGIN_USUARIO, {
+  const goBack = () => {
+    history.push("/");
+  };
+  const [loginUsuario, {data, loading, error}] = useMutation(LOGIN_USUARIO, {
     variables: {
       email: formState.email,
       password: formState.password,
-    } 
+    },
+    onCompleted: (data) => {
+      if(data.loginUsuario){
+        console.log(data.loginUsuario);
+        setUser({
+          accesstoken: data.loginUsuario //data.loginUsuario = accesToken
+        });
+        goBack();
+      }else{
+        console.log('Usuario o contraseña Incorrectos.')
+      }
+    }
   });
-  if (loading) return <p> Loading... </p>;
-  if (error) return <p> Error: </p>;
    return (
     <>
-      <AppBarBis></AppBarBis>
       <h1>¿Ya tenés una cuenta? Inicia Sesión</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          console.log('user encontrado: ', data.loginUsuario)
           loginUsuario();
         }}
       >

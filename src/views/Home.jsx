@@ -7,7 +7,6 @@ import { getAllSeries } from "../graphql/resolvers/series.resolver";
 import { useState, useEffect } from "react";
 import SearchBar from "../components/SearchBar/SearchBar";
 import ListPage from "../components/SearchBar/ListPage";
-import MiAppBar from "../components/NavBar/NavBar";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -27,7 +26,6 @@ const Home = () => {
   if (error) return <p> Error: </p>;
   return (
     <>
-      <MiAppBar></MiAppBar>
       <div>
       <Link to="/create">
         <Fab color="info" aria-label="add">

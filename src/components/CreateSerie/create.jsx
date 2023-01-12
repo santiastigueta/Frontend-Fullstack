@@ -8,7 +8,6 @@ import TextField from "@mui/material/TextField";
 import years  from "../../utils/years";
 import score from "../../utils/score";
 import genders from "../../utils/genders";
-import MiAppBar from "../NavBar/NavBar";
 
 const Crear = () => {
   const history = useHistory();
@@ -47,7 +46,6 @@ const Crear = () => {
 
   return (
     <>
-      <MiAppBar></MiAppBar>
       <body className="CreateComponent">
       <div className="Formulario">
         <h1>Añada una serie nueva!</h1>

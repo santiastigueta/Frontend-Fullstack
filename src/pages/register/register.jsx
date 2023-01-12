@@ -1,12 +1,14 @@
-import React from "react";
+import React, {useContext, useState} from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useMutation } from "@apollo/client";
-import { useState } from "react";
 import { REGISTER_USUARIO } from "../../graphql/resolvers/user.resolver";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../../App";
+
 const Register = () => {
+  const history = useHistory();
   const [formState, setFormState] = useState({
     email: "",
     username: "",
@@ -22,9 +24,9 @@ const Register = () => {
   });
 
   const createUser = () => {
-    
     console.log("usuario creado: ", formState);
     registerUsuario();
+    history.push('/login')
   };
 
   return (

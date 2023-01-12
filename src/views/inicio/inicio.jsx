@@ -1,12 +1,12 @@
-import React from 'react';
-import AppBarBis from '../../components/NavBarBis/NavBarBis';
+import React, {useContext} from 'react';
+import { Redirect } from 'react-router-dom';
+import { UserContext } from '../../App';
 
 const Inicio = () => {
+  const [user] = useContext(UserContext);
+  if (!user.accesstoken) return <Redirect from='' to='login' noThrow/>
   return (
-    <div>
-        <AppBarBis></AppBarBis>
-        <h1>Inicio</h1>
-    </div>
+    <h1>Contenido! :D</h1>
   )
 }
 
