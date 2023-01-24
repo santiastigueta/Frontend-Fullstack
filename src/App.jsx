@@ -26,43 +26,27 @@ import { LOGOUT, SEND_REFRESHTOKEN } from "./graphql/resolvers/user.resolver";
 export const UserContext = React.createContext([]);
 
 function App() {
-  const [user, setUser] = useState({});
-  const [loadingApp, setLoadingApp] = useState(true)
-  const history = useHistory();
-
-  const [logOut] = useMutation(LOGOUT, {
-    onCompleted: () => {
-      setUser({});
-    }
-  });
-
-  const logOutCallBack = async () => {
-    logOut();
-    history.push('/')
+  const [currentUser, setCurrentUser] = useState(undefined)
+  const getCurrentUser = () => {//considerar guardar estas funciones en services
+    return JSON.parse(localStorage.getItem("user"));
   };
-
- /*  const [sendRefreshToken, {data, loading, error}] = useMutation(SEND_REFRESHTOKEN, {
-    onCompleted: (data) => {
-      setLoadingApp(false)
-      console.log("sendrefreshdata: ", data)
-      setUser({
-        accesstoken: data.sendRefreshToken
-      });
-    }
-  });
-
+  const logout = () => {//considerar guardar estas funciones en services
+    localStorage.removeItem("user");
+  };
   useEffect(() => {
-    sendRefreshToken();
-  }, []);
+    const user = getCurrentUser();
+    if(user) {
+      setCurrentUser(user)
+    }
+  }, []) 
 
-  if(loadingApp) return <div>loading...</div> */
-
+  
   return (
-    <UserContext.Provider value={[user, setUser]}>
+    <UserContext.Provider value={[currentUser, setCurrentUser]}>
       <ThemeProvider theme={darkTheme}>
         <div className="App">
           <Router>
-          <NavBarBis logOutCallBack={logOutCallBack}></NavBarBis>
+          <NavBarBis logout={logout}></NavBarBis>
             <Switch>
               <Route path="/" exact component={Inicio}></Route>
               <Route path="/home" component={Home}></Route>
