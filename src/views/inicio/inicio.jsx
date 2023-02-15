@@ -3,8 +3,10 @@ import { Redirect } from 'react-router-dom';
 import { UserContext } from '../../App';
 
 const Inicio = () => {
+  const [currentUser] = useContext(UserContext);
+  console.log("CURRENT USER: ",currentUser);
   return (
-    <h1>Contenido! :D</h1>
+    <h1>Landing Page</h1>
   )
 }
 

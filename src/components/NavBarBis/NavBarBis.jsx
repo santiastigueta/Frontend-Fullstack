@@ -83,7 +83,7 @@ export default function AppBarBis({ logout }) {
             </Stack>
           )}
           {currentUser ? (
-            <Button onClick={logout}>Log Out</Button>
+            <Button component={Link} to="/" onClick={logout}>Log Out</Button>
           ) : (
             <Stack spacing={2} direction="row">
               <Button component={Link} to="/register" variant="contained">sign Up</Button>

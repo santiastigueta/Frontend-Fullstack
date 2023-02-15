@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+// eliminar getallseries
 export const getAllSeries = gql `
   query GetAllSeries {
     getAllSeries {
@@ -14,7 +15,20 @@ export const getAllSeries = gql `
     }
   }
 `;
-
+export const getAllseriesUser = gql `
+  query GetAllseriesUser($userId: ID) {
+    getAllseriesUser(userId: $userId) {
+      _id
+      author
+      gender
+      image
+      name
+      name_lower
+      rating
+      releaseDate
+    }
+  }
+`;
 export const getSerie = gql `
   query GetSerie($idSerie: ID) {
   getSerie(idSerie: $idSerie) {

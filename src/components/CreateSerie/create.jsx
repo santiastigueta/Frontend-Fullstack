@@ -2,19 +2,18 @@ import React, { useState } from "react";
 import "./create.css";
 import { CREATE_SERIE } from "../../graphql/resolvers/series.resolver";
 import { useMutation } from "@apollo/client";
-import { useHistory } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { Autocomplete, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import years  from "../../utils/years";
 import score from "../../utils/score";
 import genders from "../../utils/genders";
-
 const Crear = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const backToMenu = () => {
-    history.push("/home");
+    navigate("/home");
   };
-
+  
   const [generoInputValue, setGeneroInputValue] = useState('');
   const [yearInputValue, setYearInputValue] = useState('');
   const [scoreInputValue, setScoreInputValue] = useState('')
@@ -27,8 +26,7 @@ const Crear = () => {
     image: "",
     gender: "",
   });
-
-  const [createSerie] = useMutation(CREATE_SERIE, {
+  const [createSerie, {loading, data, error}] = useMutation(CREATE_SERIE, {
     variables: {
       nombre: formState.nombre,
       autor: formState.autor,
@@ -38,12 +36,18 @@ const Crear = () => {
       gender: formState.gender,
     },
   });
+  let user;
+  try {
+    user = localStorage.getItem("user").slice(17, -2);
+    console.log("token del usuario: ", user);
+  } catch (error) {
+    return (<div>No estas logueado</div>)
+  }
+  
   const createThisSeries = () => {
     createSerie();
     backToMenu();
   };
-  
-
   return (
     <>
       <body className="CreateComponent">

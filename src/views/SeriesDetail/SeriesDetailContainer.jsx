@@ -18,10 +18,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DELETE_SERIE } from "../../graphql/resolvers/series.resolver";
-import { useLocation, useParams, useHistory, Link } from "react-router-dom";
+import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
 function SeriesDetailContainer() {
+  const navigate = useNavigate();
   const { _id } = useParams();
   const [open, setOpen] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
@@ -34,7 +35,6 @@ function SeriesDetailContainer() {
     image: "",
     gender: "",
   });
-  const history = useHistory();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -86,13 +86,17 @@ function SeriesDetailContainer() {
 
   const eliminar = () => {
     deleteSeries();
-    history.push("/");
+    navigate("/");
   };
 
   const updateThisSeries = () => {
     updateSerie();
     setOpenUpdate(false);
   };
+  
+  const navigateBack = () => {
+    navigate(-1)
+  } 
 
   return (
     <>
@@ -143,8 +147,7 @@ function SeriesDetailContainer() {
             <Button
               variant="contained"
               color="secondary"
-              component={Link}
-              to="/home"
+              onClick={navigateBack}
             >
               Volver
             </Button>
