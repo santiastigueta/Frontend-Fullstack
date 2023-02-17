@@ -63,6 +63,12 @@ const PostCatalogo = ({ post }) => {
           >
             Esta serie fue creada por {post.author} en el año {post.releaseDate}{" "}
           </Typography>{" "}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+          >
+            Puntuación de imdb: {post.rating}{" "}
+          </Typography>{" "}
         </CardContent>{" "}
       </CardActionArea>{" "}
       <CardActions>
@@ -70,7 +76,7 @@ const PostCatalogo = ({ post }) => {
           género: {post.gender}{" "}
         </Button>{" "}
       </CardActions>{" "}
-      <Button
+      {/* <Button
         variant="contained"
         color="secondary"
         onClick={function () {
@@ -78,7 +84,7 @@ const PostCatalogo = ({ post }) => {
         }}
       >
         Ver mas detalles{" "}
-      </Button>{" "}
+      </Button>{" "} */}
       <Button variant="contained" color="primary" onClick={asignarSerieUser}>
         Agregar
       </Button>

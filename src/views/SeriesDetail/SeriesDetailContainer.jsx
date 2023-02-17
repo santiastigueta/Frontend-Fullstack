@@ -21,6 +21,7 @@ import { DELETE_SERIE } from "../../graphql/resolvers/series.resolver";
 import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
+import authHeader from "../../services/auth-header";
 function SeriesDetailContainer() {
   const navigate = useNavigate();
   const { _id } = useParams();
@@ -35,7 +36,6 @@ function SeriesDetailContainer() {
     image: "",
     gender: "",
   });
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -58,6 +58,9 @@ function SeriesDetailContainer() {
         setFormState({ ...data.getSerie });
       }
     },
+    context: {
+      headers: authHeader()
+    }
   });
 
   // Mutation
