@@ -15,6 +15,11 @@
     justify-content: space-around;
 }
 
+.mb2 {
+    max-width: 200px;
+    min-height: 100px;
+}
+
 #outlined-basic {
     width: 230px;
 }

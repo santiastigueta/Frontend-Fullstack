@@ -4,11 +4,11 @@ import TextField from "@mui/material/TextField";
 import { useMutation } from "@apollo/client";
 import { REGISTER_USUARIO } from "../../graphql/resolvers/user.resolver";
 import { Button } from "@mui/material";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 
 const Register = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [formState, setFormState] = useState({
     email: "",
     username: "",
@@ -21,12 +21,17 @@ const Register = () => {
       username: formState.username,
       password: formState.password,
     },
+    onCompleted: (data) => {
+      if(data.registerUsuario){
+        localStorage.setItem("user", JSON.stringify(data.registerUsuario))
+      }
+    }
   });
 
   const createUser = () => {
     console.log("usuario creado: ", formState);
     registerUsuario();
-    history.push('/login')
+    navigate('/login')
   };
 
   return (

@@ -8,13 +8,15 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import AccountCircle from "@mui/icons-material/AccountCircle";
 import Stack from '@mui/material/Stack';
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
+import { UserContext } from "../../App";
+import { useContext } from "react";
 
-export default function AppBarBis({logOutCallBack}) {
+export default function AppBarBis({ logout }) {
+  const [currentUser] = useContext(UserContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const handleMenuClose = () => {
@@ -75,11 +77,19 @@ export default function AppBarBis({logOutCallBack}) {
             </Button>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
-          <Stack spacing={2} direction="row">
-            <Button component={Link} to="/register" variant="contained">sign Up</Button>
-            <Button component={Link} to="/login" variant="outlined">login</Button>
-            <Button onClick={logOutCallBack}>Log Out</Button>
-          </Stack>
+          {currentUser && (
+            <Stack spacing={2} direction="row">
+              <Button component={Link} to="/home">Mis series</Button>
+            </Stack>
+          )}
+          {currentUser ? (
+            <Button component={Link} to="/" onClick={logout}>Log Out</Button>
+          ) : (
+            <Stack spacing={2} direction="row">
+              <Button component={Link} to="/register" variant="contained">sign Up</Button>
+              <Button component={Link} to="/login" variant="outlined">login</Button>
+            </Stack>
+          )}
         </Toolbar>
       </AppBar>
       {renderMenu}

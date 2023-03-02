@@ -5,32 +5,26 @@ import { Button } from "@mui/material";
 import { LOGIN_USUARIO } from "../../graphql/resolvers/user.resolver";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import { UserContext } from "../../App";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ConstructionOutlined } from "@mui/icons-material";
 
 
 const Login = () => {
-  const history = useHistory();
-  const [user, setUser] = useContext(UserContext);
+  const navigate = useNavigate();
   const [formState, setFormState] = useState({
     email: "",
     password: "",
   }); 
-  const goBack = () => {
-    history.push("/");
-  };
-  const [loginUsuario, {data, loading, error}] = useMutation(LOGIN_USUARIO, {
+  const [loginUsuario] = useMutation(LOGIN_USUARIO, {
     variables: {
       email: formState.email,
       password: formState.password,
     },
     onCompleted: (data) => {
       if(data.loginUsuario){
-        console.log(data.loginUsuario);
-        setUser({
-          accesstoken: data.loginUsuario //data.loginUsuario = accesToken
-        });
-        goBack();
+        localStorage.setItem("user", JSON.stringify(data));
+        navigate("/home");
+        window.location.reload();
       }else{
         console.log('Usuario o contraseña Incorrectos.')
       }

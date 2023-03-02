@@ -3,11 +3,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Post = ({ post }) => {
-    const history = useHistory();
+    const navigate = useNavigate();
   return (
     <Card className="Card" style={{paddingBottom: "15px", minHeight: "100x"}} sx={{ maxWidth: 345 }}>
       <CardActionArea  >
@@ -36,7 +36,7 @@ const Post = ({ post }) => {
         variant="contained"
         color="secondary"
         onClick={function () {
-          history.push(`/serie/${post._id}`);
+          navigate(`/serie/${post._id}`);
         }}
       >
         Ver mas detalles{" "}

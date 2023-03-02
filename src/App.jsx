@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, useHistory } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { createContext } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 
 // CSS
 import "./App.css";
@@ -12,68 +18,62 @@ import Inicio from "./views/inicio/inicio";
 import Home from "./views/Home";
 import Crear from "./components/CreateSerie/create";
 import SeriesDetailContainer from "./views/SeriesDetail/SeriesDetailContainer";
-
+import SeriesCatalogo from "./views/seriesCatalogo/seriesCatalogo";
 // estilos
 import { ThemeProvider } from "@mui/material/styles";
 import darkTheme from "./utils/darkTheme";
 
 //pages
-import logIn from "./pages/logIn/logIn";
+import Login from "./pages/logIn/logIn";
 import Register from "./pages/register/register";
 import { useMutation } from "@apollo/client";
 import { LOGOUT, SEND_REFRESHTOKEN } from "./graphql/resolvers/user.resolver";
 
-export const UserContext = React.createContext([]);
+export const UserContext = createContext([]);
 
 function App() {
-  const [user, setUser] = useState({});
-  const [loadingApp, setLoadingApp] = useState(true)
-  const history = useHistory();
-
-  const [logOut] = useMutation(LOGOUT, {
-    onCompleted: () => {
-      setUser({});
-    }
-  });
-
-  const logOutCallBack = async () => {
-    logOut();
-    history.push('/')
+  const [currentUser, setCurrentUser] = useState(undefined);
+  const getCurrentUser = () => {
+    //considerar guardar estas funciones en services
+    return JSON.parse(localStorage.getItem("user"));
   };
-
- /*  const [sendRefreshToken, {data, loading, error}] = useMutation(SEND_REFRESHTOKEN, {
+  const [logOut] = useMutation(
+    LOGOUT , {
     onCompleted: (data) => {
-      setLoadingApp(false)
-      console.log("sendrefreshdata: ", data)
-      setUser({
-        accesstoken: data.sendRefreshToken
-      });
+      localStorage.removeItem("user");
+      window.location.reload();
     }
-  });
+  } 
+  );
+
+  // SIGUIENTE PASO: HACER FUNCIONAR EL CREATE SERIE SEGUN USUARIO. 
 
   useEffect(() => {
-    sendRefreshToken();
+    const user = getCurrentUser();
+    if (user) {
+      setCurrentUser(user);
+    }
+    console.log("current user: ", user);
   }, []);
 
-  if(loadingApp) return <div>loading...</div> */
-
   return (
-    <UserContext.Provider value={[user, setUser]}>
+    <UserContext.Provider value={[currentUser, setCurrentUser]}>
       <ThemeProvider theme={darkTheme}>
         <div className="App">
           <Router>
-          <NavBarBis logOutCallBack={logOutCallBack}></NavBarBis>
-            <Switch>
-              <Route path="/" exact component={Inicio}></Route>
-              <Route path="/home" component={Home}></Route>
-              <Route path="/create" component={Crear}></Route>
+            <NavBarBis logout={logOut}></NavBarBis>
+            <Routes>
+              <Route path="/" exact element={<Inicio/>}></Route>
+              <Route path="/home" element={<Home/>}></Route>
+              <Route path="/create" element={<Crear/>}></Route>
+              <Route path='/series' element={<SeriesCatalogo/>}></Route> {/* catalogo de series */}
               <Route
                 path="/serie/:_id"
-                component={SeriesDetailContainer}
+                element={<SeriesDetailContainer/>}
               ></Route>
-              <Route path="/login" component={logIn}></Route>
-              <Route path="/register" component={Register}></Route>
-            </Switch>
+              <Route path="/login" element={<Login/>}></Route>
+              <Route path="/register" element={<Register/>}></Route>
+            </Routes>
           </Router>
         </div>
       </ThemeProvider>
