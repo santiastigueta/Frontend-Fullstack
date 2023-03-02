@@ -22,10 +22,90 @@ import { useLocation, useParams, Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import { useEffect } from "react";
 import authHeader from "../../services/auth-header";
+import { selfSerie } from "../../graphql/resolvers/user.resolver";
+import userIdFunction from "../../utils/extractUserId";
+import PlaylistRemoveIcon from '@mui/icons-material/PlaylistRemove';
+import { DELETE_SERIE_FROM_USER } from "../../graphql/resolvers/series.resolver";
+function Options({ serieId, serieName }) {
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const [deleteSeriesFromUser] = useMutation(DELETE_SERIE_FROM_USER, {
+    variables: {
+      serieId: serieId,
+      userId: userIdFunction(),
+    },
+  }); // selfserie nos indica si la serie está o no en su lista (true/false)
+  const { loading, error, data } = useQuery(selfSerie, {
+    variables: {
+      userId: userIdFunction(),
+      serieId: serieId,
+    },
+    onCompleted: (data) => {
+      console.log("info: ", data.selfSerie);
+    },
+  });
+  if (loading) return null;
+  if (error) return `Error! ${error}`;
+  const eliminar = () => {
+    deleteSeriesFromUser();
+    navigate("/home");
+  };
+  // la serie pertenece a la lista del usuario? si es true se puede eliminar
+  const condition = data.selfSerie;
+  return (
+    <div>
+      {condition ? (
+        <>
+          <Button
+            size="small"
+            onClick={handleClickOpen}
+            variant="contained"
+            color="delete"
+            startIcon={<PlaylistRemoveIcon />}
+          >
+            Eliminar de tu lista
+          </Button>
+
+          {/* Eliminar */}
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Estás seguro de eliminar esta serie?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Si elimina esta serie, será removida de la base de datos y no
+                habrá forma de recuperarla. Presione aceptar para eliminar{" "}
+                {serieName}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>cancelar</Button>
+              <Button onClick={eliminar}>Eliminar</Button>
+            </DialogActions>
+          </Dialog>
+        </>
+      ) : /* Si la serie no pertenece a la lista, no esta disponible la opcion de eliminar de la lista */(
+        <></>
+      )}
+    </div>
+  );
+}
+
+//<Options idSerie={_id}/>
 function SeriesDetailContainer() {
   const navigate = useNavigate();
   const { _id } = useParams();
-  const [open, setOpen] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [formState, setFormState] = useState({
     _id: "",
@@ -36,19 +116,13 @@ function SeriesDetailContainer() {
     image: "",
     gender: "",
   });
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
   const updateOpen = () => {
     setOpenUpdate(true);
   };
   const updateClose = () => {
     setOpenUpdate(false);
   };
-
   const { loading, error, data } = useQuery(getSerie, {
     variables: {
       idSerie: _id,
@@ -59,16 +133,10 @@ function SeriesDetailContainer() {
       }
     },
     context: {
-      headers: authHeader()
-    }
-  });
-
-  // Mutation
-  const [deleteSeries] = useMutation(DELETE_SERIE, {
-    variables: {
-      idSerie: _id,
+      headers: authHeader(),
     },
   });
+  // la serie pertenece a la lista del usuario? uso la funcion self_serie para averiguarlo
 
   const [updateSerie] = useMutation(UPDATE_SERIE, {
     variables: {
@@ -80,6 +148,9 @@ function SeriesDetailContainer() {
       image: formState.image,
       gender: formState.gender,
     },
+    context: {
+      headers: authHeader(),
+    },
   });
 
   if (loading) return null;
@@ -87,19 +158,15 @@ function SeriesDetailContainer() {
 
   const serieDetail = data.getSerie;
 
-  const eliminar = () => {
-    deleteSeries();
-    navigate("/");
-  };
-
+  console.log("data: ", data);
   const updateThisSeries = () => {
     updateSerie();
     setOpenUpdate(false);
   };
-  
+
   const navigateBack = () => {
-    navigate(-1)
-  } 
+    navigate(-1);
+  };
 
   return (
     <>
@@ -126,26 +193,19 @@ function SeriesDetailContainer() {
               ImDb Score: {serieDetail.rating}
             </Typography>
           </cardAction>
-          <CardActions>
+          <cardAction className="options">
             <Button
               size="small"
               variant="contained"
               startIcon={<EditIcon />}
               color="info"
               onClick={updateOpen}
+              className="editButton"
             >
               Editar
             </Button>
-            <Button
-              size="small"
-              onClick={handleClickOpen}
-              variant="contained"
-              color="info"
-              startIcon={<DeleteIcon />}
-            >
-              Eliminar
-            </Button>
-          </CardActions>
+            <Options serieId={_id} serieName={serieDetail.name}></Options>
+          </cardAction>
           <cardAction className="volver-button">
             <Button
               variant="contained"
@@ -156,31 +216,6 @@ function SeriesDetailContainer() {
             </Button>
           </cardAction>
         </Card>
-
-        {/* Eliminar */}
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Estás seguro de eliminar esta serie?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              Si elimina esta serie, será removida de la base de datos y no
-              habrá forma de recuperarla. Presione aceptar para eliminar{" "}
-              {serieDetail.name}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>cancelar</Button>
-            <Button onClick={eliminar} autoFocus>
-              Aceptar
-            </Button>
-          </DialogActions>
-        </Dialog>
 
         {/* Update */}
         <Dialog

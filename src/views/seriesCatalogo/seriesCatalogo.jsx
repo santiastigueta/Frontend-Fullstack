@@ -7,16 +7,20 @@ import authHeader from "../../services/auth-header";
 import ListPageCatalogo from "./ListPageCatalogo";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import ReplyIcon from '@mui/icons-material/Reply';
+import CreateIcon from '@mui/icons-material/Create';
+import { Link } from "react-router-dom";
+import Fab from "@mui/material/Fab";
+import './seriesCatalogo.css';
 const SeriesCatalogo = () => {
     const [posts, setPosts] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
     //const [currentUser] = useContext(UserContext); me crea errores sacar el id del context.
     // voy a tener que sacar el _id del usuario del localstorage
     //const user = jwt(currentUser.loginUsuario);
-    const navigate = useNavigate();
+    
     const { loading, error, data } = useQuery(getAllSeries, {
       onCompleted: (data) => {
-        authHeader();
         if (data) {
           console.log("mi data: ", data.getAllSeries);
           setPosts(data.getAllSeries);
@@ -41,7 +45,19 @@ const SeriesCatalogo = () => {
     return (
       <>
         <div>
-          <Button variant="contained" onClick={function(){navigate(-1)}}>Volver</Button>
+          {/* <Button variant="contained" onClick={function(){navigate(-1)}}>Volver</Button> */}
+          <section>
+            <Link to="/home">
+              <Fab color='info' aria-label="add" className="volver">
+                <ReplyIcon ></ReplyIcon>
+              </Fab>
+            </Link>
+            <Link to="/create">
+              <Fab color='info' aria-label="add" className="create">
+                <CreateIcon></CreateIcon>
+              </Fab>
+            </Link>
+          </section>
           <SearchBar posts={posts} setSearchResults={setSearchResults} />
           <ListPageCatalogo searchResults={searchResults} />
         </div>

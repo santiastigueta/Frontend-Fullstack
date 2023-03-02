@@ -65,20 +65,18 @@ export const getSerie = gql `
   }
 `; */
 
-export const CREATE_SERIE = gql `
-  mutation CreateSerie($nombre: String!, $autor: String, $estrellas: String, $fechaLanzamiento: String, $image: String, $gender: String) {
-  createSerie(nombre: $nombre, autor: $autor, estrellas: $estrellas, fechaLanzamiento: $fechaLanzamiento, image: $image, gender: $gender) {
-    _id
-    name
-    author
-    rating
-    releaseDate
-    image
-    gender
-  }
+export const DELETE_SERIE_FROM_USER = gql `
+  mutation DeleteSeriesFromUser($userId: ID!, $serieId: ID!) {
+  deleteSeriesFromUser(userId: $userId, serieId: $serieId)
 }
 `;
 
+export const CREATE_SERIE = gql `
+  mutation CreateSerie($nombre: String!, $autor: String, $estrellas: String, $fechaLanzamiento: String, $image: String, $gender: String, $userId: String!) {
+  createSerie(nombre: $nombre, autor: $autor, estrellas: $estrellas, fechaLanzamiento: $fechaLanzamiento, image: $image, gender: $gender, userId: $userId) 
+}`;
+
+// Solo apto para admins y para el usuario creador. 
 export const DELETE_SERIE = gql `
   mutation DeleteSerie($idSerie: ID!) {
   deleteSerie(idSerie: $idSerie) {

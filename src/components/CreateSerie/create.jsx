@@ -8,11 +8,10 @@ import TextField from "@mui/material/TextField";
 import years  from "../../utils/years";
 import score from "../../utils/score";
 import genders from "../../utils/genders";
+import userIdFunction from "../../utils/extractUserId";
+import authHeader from "../../services/auth-header";
 const Crear = () => {
   const navigate = useNavigate();
-  const backToMenu = () => {
-    navigate("/home");
-  };
   
   const [generoInputValue, setGeneroInputValue] = useState('');
   const [yearInputValue, setYearInputValue] = useState('');
@@ -26,8 +25,12 @@ const Crear = () => {
     image: "",
     gender: "",
   });
+  
+  const idSerie = userIdFunction();
+
   const [createSerie, {loading, data, error}] = useMutation(CREATE_SERIE, {
     variables: {
+      userId: idSerie,
       nombre: formState.nombre,
       autor: formState.autor,
       estrellas: formState.estrellas,
@@ -35,18 +38,12 @@ const Crear = () => {
       image: formState.image,
       gender: formState.gender,
     },
+    context: {
+      headers: authHeader()
+    }
   });
-  let user;
-  try {
-    user = localStorage.getItem("user").slice(17, -2);
-    console.log("token del usuario: ", user);
-  } catch (error) {
-    return (<div>No estas logueado</div>)
-  }
-  
   const createThisSeries = () => {
     createSerie();
-    backToMenu();
   };
   return (
     <>
@@ -64,7 +61,7 @@ const Crear = () => {
               id="outlined-basic"
               label="Nombre"
               variant="outlined"
-              classnombre="mb2"
+              className="mb2"
               value={formState.nombre}
               helperText="Nombre de la serie"
               onChange={(e) =>
@@ -79,7 +76,7 @@ const Crear = () => {
               id="outlined-basic"
               label="Autor"
               variant="outlined"
-              classnombre="mb2"
+              className="mb2"
               value={formState.autor}
               helperText="Indique el autor de la serie"
               onChange={(e) =>
@@ -91,6 +88,7 @@ const Crear = () => {
               type="text"
             />
             <Autocomplete
+              className="mb2"
               value={formState.estrellas}
               onInputChange={(e, newValue)=>{
                 setScoreInputValue(newValue)
@@ -108,6 +106,7 @@ const Crear = () => {
               renderInput={(params) => <TextField {...params} label="Puntuación" />}
             />
             <Autocomplete
+            className="mb2"
               value={formState.fechaLanzamiento}
               onInputChange={(event, newValue)=>{
                 setYearInputValue(newValue)
@@ -128,9 +127,9 @@ const Crear = () => {
               id="outlined-basic"
               label="Imagen"
               variant="outlined"
-              classnombre="mb2"
+              className="mb2"
               value={formState.image}
-              helperText="Pegue la direaccion de imagen"
+              helperText="Url de la imagen"
               onChange={(e) =>
                 setFormState({
                   ...formState,
@@ -151,6 +150,7 @@ const Crear = () => {
               onInputChange={(event, newInputValue)=>{
                 setGeneroInputValue(newInputValue)
               }}
+              className="mb2"
               id="gender-autocomplete"
               options={genders}
               sx={{width: 300}}
@@ -160,7 +160,7 @@ const Crear = () => {
           <Button type="submit" variant="contained" color="info">
             Hecho
           </Button>
-          <Button primary onClick={backToMenu} color='info'>
+          <Button primary onClick={navigate("/home")} color='info'>
             Volver
           </Button>
         </form>

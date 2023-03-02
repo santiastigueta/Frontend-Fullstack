@@ -10,7 +10,7 @@ import ListPage from "../components/SearchBar/ListPage";
 import authHeader from "../services/auth-header";
 import { UserContext } from "../App";
 import jwt from "jwt-decode";
-
+import './home.css';
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
@@ -50,8 +50,8 @@ const Home = () => {
     <>
       <div>
         <Link to="/series">
-          <Fab color="info" aria-label="add">
-            <AddIcon className="addIcon"></AddIcon>
+          <Fab color="info" aria-label="add" className="addIcon">
+            <AddIcon></AddIcon>
           </Fab>
         </Link>
         <SearchBar posts={posts} setSearchResults={setSearchResults} />

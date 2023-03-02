@@ -19,3 +19,12 @@
 }
 
 .editDialog {}
+
+.editButton {
+    max-height: 30px;
+}
+
+.options {
+    display: flex;
+    flex-direction: row;
+}

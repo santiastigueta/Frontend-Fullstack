@@ -1,4 +1,5 @@
-
+import { React, useState, useEffect } from "react";
+import { createContext } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -28,7 +29,7 @@ import Register from "./pages/register/register";
 import { useMutation } from "@apollo/client";
 import { LOGOUT, SEND_REFRESHTOKEN } from "./graphql/resolvers/user.resolver";
 
-export const UserContext = React.createContext([]);
+export const UserContext = createContext([]);
 
 function App() {
   const [currentUser, setCurrentUser] = useState(undefined);

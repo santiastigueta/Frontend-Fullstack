@@ -8,21 +8,13 @@ import { ASIGNAR_SERIE_USUARIO } from "../../graphql/resolvers/user.resolver";
 import { useMutation } from "@apollo/client";
 import jwt from "jwt-decode";
 import authHeader from "../../services/auth-header";
+import userIdFunction from "../../utils/extractUserId";
 
 const PostCatalogo = ({ post }) => {
   const navigate = useNavigate();
-  let userToken;
-  try {
-    // conseguir el token del usuario logueado
-    userToken = localStorage.getItem("user").slice(17, -2);
-  } catch (error) {
-    console.log("No estas logueado");
-  }
-  const data = jwt(userToken); //decifrar el id del usuario
-
   const [asignarSerieUser] = useMutation(ASIGNAR_SERIE_USUARIO, {
     variables: {
-      userId: data.userId._id,
+      userId: userIdFunction(),
       serieId: post._id,
     },
     fetchPolicy: "network-only",
@@ -76,7 +68,7 @@ const PostCatalogo = ({ post }) => {
           género: {post.gender}{" "}
         </Button>{" "}
       </CardActions>{" "}
-      {/* <Button
+      <Button
         variant="contained"
         color="secondary"
         onClick={function () {
@@ -84,7 +76,7 @@ const PostCatalogo = ({ post }) => {
         }}
       >
         Ver mas detalles{" "}
-      </Button>{" "} */}
+      </Button>{" "}
       <Button variant="contained" color="primary" onClick={asignarSerieUser}>
         Agregar
       </Button>

@@ -10,6 +10,9 @@ const darkTheme = createTheme({
         },
         info: {
             main: '#000'
+        },
+        delete: {
+            main: red[50]
         }
     },
 });
